@@ -72,6 +72,8 @@ var _ DB = (*PebbleDB)(nil)
 func NewPebbleDB(name string, dir string) (*PebbleDB, error) {
 	opts := &pebble.Options{}
 	opts.EnsureDefaults()
+	opts.Cache = pebble.NewCache(128 << 20)
+	opts.MaxOpenFiles = 16384
 	return NewPebbleDBWithOpts(name, dir, opts)
 }
 
